@@ -1,0 +1,121 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="css/ionic.css">
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/geturi.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+        var id = decodeURI(getUrlVars()["id"]);
+        var kode = decodeURI(getUrlVars()["kode"]);
+        var nim = decodeURI(getUrlVars()["nim"]);
+        var matakuliah = decodeURI(getUrlVars()["matakuliah"]);
+        var kpkl = decodeURI(getUrlVars()["kpkl"]);
+        var khs = decodeURI(getUrlVars()["khs"]);
+        var dosenp = decodeURI(getUrlVars()["dosenp"]);
+        $("#id").val(id);
+        $("#kode").val(kode);
+        $("#nim").val(nim);
+        $("#matakuliah").val(matakuliah);
+        $("#kpkl").val(kpkl);
+        $("#khs").val(khs);
+        $("#dosenp").val(dosenp);
+        
+        $("#update").click(function() {
+            var id = $("#id").val();
+            var kode = $("#kode").val();
+            var nim = $("#nim").val();
+            var matakuliah = $("#matakuliah").val();
+            var kpkl = $("#kpkl").val();
+            var khs = $("#khs").val();
+            var dosenp = $("#dosenp").val();
+            var dataString = "id=" + id + "&kode=" + kode + "&nim=" + nim + "&matakuliah=" + matakuliah + "&kpkl=" + kpkl + "&khs=" + khs + "&dosenp=" + dosenp + "&update=";
+            $.ajax({
+                type: "POST",
+                url: "https://oiklutfiyan.000webhostapp.com/AppCordova/AppCordova/www/update.php",
+                data: dataString,
+                crossDomain: true,
+                cache: false,
+                beforeSend: function() {
+                    $("#update").val('Connecting...');
+                },
+                success: function(data) {
+                    if (data == "success") {
+                        alert("Updated");
+                        $("#update").val("Update");
+                    } else if (data == "error") {
+                        alert("error");
+                    }
+                }
+            });
+
+        });
+        $("#delete").click(function() {
+            var id = $("#id").val();
+            var dataString = "id=" + id + "&delete=";
+            $.ajax({
+                type: "GET",
+                url: "https://oiklutfiyan.000webhostapp.com/AppCordova/AppCordova/www/delete.php",
+                data: dataString,
+                crossDomain: true,
+                cache: false,
+                beforeSend: function() {
+                    $("#delete").val('Connecting...');
+                },
+                success: function(data) {
+                    if (data == "success") {
+                        alert("Deleted");
+                        $("#delete").val("Delete");
+                    } else if (data == "error") {
+                        alert("error");
+                    }
+                }
+            });
+
+        });
+    });
+    </script>
+</head>
+
+<body>
+    <div class="bar bar-header bar-positive" style="margin-bottom:80px;">
+        <a href="index.html" class="button button-clear">Home</a>
+        <h1 class="title">Update Database</h1>
+        <a class="button button-clear" href="readjson.html">Read JSON</a>
+    </div>
+    <br/>
+    <br/>
+    <div class="list">
+        <input type="hidden" id="id" value="" />
+        <div class="item">
+            <label>Kode</label>
+            <input type="text" id="kode" value="" />
+        </div>
+        <div class="item">
+            <label>NIM</label>
+            <input type="text" id="nim" value="" />
+        </div>
+        <div class="item">
+            <label>Mata Kuliah</label>
+            <input type="text" id="matakuliah" value="" />
+        </div>
+        <div class="item">
+            <label>KPKL</label>
+            <input type="text" id="kpkl" value="" />
+        </div>
+        <div class="item">
+            <label>KHS</label>
+            <input type="text" id="khs" value="" />
+        </div>
+        <div class="item">
+            <label>Dosen Pengampu</label>
+            <input type="text" id="dosenp" value="" />
+        </div>
+        <div class="item">
+            <input type="button" id="update" class="button button-block" value="Update" />
+            <input type="button" id="delete" class="button button-block" value="Delete" />
+        </div>
+    </div>
+</body>
+
+</html>
